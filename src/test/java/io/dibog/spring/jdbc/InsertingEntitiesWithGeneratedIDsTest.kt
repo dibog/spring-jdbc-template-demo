@@ -33,13 +33,21 @@ class InsertingEntitiesWithGeneratedIDsTest : BaseDatabase() {
 
         @Test
         fun `using the plain jdbc way`() {
-            val id = jdbc.execute(ConnectionCallback<Number>(){ conn ->
-                val ps = conn.prepareStatement( SQL_INSERT_ENTITY, Statement.RETURN_GENERATED_KEYS )
-                ps.setString(1, "Z")
-                val nb = ps.executeUpdate()
-                assert(nb==1) { "Expected to have inserted one entity, but it were $nb" }
-                ps.singleGeneratedKey<Number>("ID")
+            // tag::inserting-single-entity-jdbc[]
+            val id = jdbc.execute(ConnectionCallback<Number>(){ conn ->                 // <1>
+                val ps = conn.prepareStatement(                                         // <2>
+                        SQL_INSERT_ENTITY,
+                        Statement.RETURN_GENERATED_KEYS )
+                ps.setString(1, "Z")                                                    // <3>
+                val nb = ps.executeUpdate()                                             // <4>
+
+                assert(nb==1) {
+                    "Expected to have inserted one entity, but it were $nb"
+                }
+
+                ps.singleGeneratedKey<Number>("ID")                                     // <5>
             })
+            // end::inserting-single-entity-jdbc[]
 
             assertThat(id).isNotNull().isInstanceOf(Number::class)
         }
@@ -56,7 +64,10 @@ class InsertingEntitiesWithGeneratedIDsTest : BaseDatabase() {
                     keyHolder
             )
 
-            assert(nb==1) { "Expected to have inserted one entity, but it were $nb" }
+            assert(nb==1) {
+                "Expected to have inserted one entity, but it were $nb"
+            }
+
             val id = keyHolder.key
 
             assertThat(id).isNull()
@@ -64,18 +75,25 @@ class InsertingEntitiesWithGeneratedIDsTest : BaseDatabase() {
 
         @Test
         fun `using the spring jdbc way correctly`() {
-            val keyHolder = GeneratedKeyHolder()
+            // tag::inserting-single-entity-spring[]
+            val keyHolder = GeneratedKeyHolder()                                        // <1>
             val nb = jdbc.update(
-                    PreparedStatementCreator { conn->
-                        conn.prepareStatement(SQL_INSERT_ENTITY, Statement.RETURN_GENERATED_KEYS).apply {
-                            setString(1, "Z")
+                    PreparedStatementCreator { conn->                                   // <2>
+                        conn.prepareStatement(
+                                SQL_INSERT_ENTITY,
+                                Statement.RETURN_GENERATED_KEYS                         // <3>
+                        ).apply {
+                            setString(1, "Z")                                           // <4>
                         }
                     },
-                    keyHolder
+                    keyHolder                                                           // <5>
             )
 
-            assert(nb==1) { "Expected to have inserted one entity, but it were $nb" }
-            val id = keyHolder.key
+            assert(nb==1) {
+                "Expected to have inserted one entity, but it were $nb"
+            }
+            val id = keyHolder.key                                                      // <6>
+            // end::inserting-single-entity-spring[]
 
             assertThat(id).isNotNull().isInstanceOf(Number::class)
         }
@@ -87,19 +105,26 @@ class InsertingEntitiesWithGeneratedIDsTest : BaseDatabase() {
 
         @Test
         fun `using the plain jdbc way`() {
-            val id = jdbc.execute(ConnectionCallback<List<Number?>>(){ conn ->
-                val ps = conn.prepareStatement( SQL_INSERT_ENTITY, Statement.RETURN_GENERATED_KEYS )
+            // tag::inserting-multiple-entity-plain[]
+            val id = jdbc.execute(
+                    ConnectionCallback<List<Number?>>(){ conn ->                        // <1>
+                val ps = conn.prepareStatement(
+                        SQL_INSERT_ENTITY, Statement.RETURN_GENERATED_KEYS )            // <2>
 
-                ps.setString(1, "Z")
+                ps.setString(1, "Z")                                                    // <3>
                 ps.addBatch()
 
-                ps.setString(1, "Y")
+                ps.setString(1, "Y")                                                    // <3>
                 ps.addBatch()
 
-                val nb = ps.executeBatch()
-                assert(nb.sumBy { it }==2) { "Expected to have inserted two entities, but it were $nb" }
-                ps.generatedKeys<Number>("ID")
+                val nb = ps.executeBatch()                                              // <4>
+                assert(nb.sumBy { it }==2) {
+                    "Expected to have inserted two entities, but it were $nb"
+                }
+
+                ps.generatedKeys<Number>("ID")                                          // <5>
             })
+            // end::inserting-multiple-entity-plain[]
 
             assertThat(id).isNotNull()
             assertThat( id.all { it!=null } )
@@ -107,11 +132,12 @@ class InsertingEntitiesWithGeneratedIDsTest : BaseDatabase() {
 
         @Test
         fun `using the spring jdbc way with an extension method`() {
-            val keyHolder = GeneratedKeyHolder()
+            // tag::inserting-multiple-entity-spring[]
+            val keyHolder = GeneratedKeyHolder()                                        // <1>
             val names = listOf("Z","Y")
-            val inserts = jdbc.batchInsert(
+            val inserts = jdbc.batchInsert(                                             // <2>
                     SQL_INSERT_ENTITY,
-                    object: BatchPreparedStatementSetter{
+                    object: BatchPreparedStatementSetter{                               // <3>
                         private val iter = names.iterator()
                         override fun getBatchSize() = names.size
                         override fun setValues(ps: PreparedStatement, i: Int) {
@@ -119,15 +145,16 @@ class InsertingEntitiesWithGeneratedIDsTest : BaseDatabase() {
                             ps.setString(1, name)
                         }
                     },
-                    keyHolder
+                    keyHolder                                                           // <4>
             )
 
             assertThat(inserts).isNotNull()
             assertThat(inserts.sumBy { it }==2)
 
-            val keys = keyHolder.extract<Number>("ID")
+            val keys = keyHolder.extract<Number>("ID")                                  // <5>
+            // end::inserting-multiple-entity-spring[]
+
             assertThat(inserts.all { it!=null })
         }
     }
-
 }

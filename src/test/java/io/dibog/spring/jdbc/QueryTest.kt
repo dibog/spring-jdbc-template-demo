@@ -50,7 +50,13 @@ class QueryTest : BaseDatabase() {
     inner class QuerySingleEntity {
         @Test
         fun `which should definitely exist (and it does)`() {
-            val name = jdbc.queryForObject(SQL_QUERY_SINGLE_ENTITY, arrayOf("A"), EntityRowMapper)
+            // tag::query-single-entity[]
+            val name = jdbc.queryForObject(                                             // <1>
+                    SQL_QUERY_SINGLE_ENTITY,                                            // <2>
+                    arrayOf("A"),                                                       // <3>
+                    EntityRowMapper                                                     // <4>
+            )
+            // end::query-single-entity[]
 
             assertThat(name).isNotNull()
             assertThat(name.name).isEqualTo("A")
@@ -85,7 +91,12 @@ class QueryTest : BaseDatabase() {
     inner class QueryManyEntities {
         @Test
         fun doAndTestIt() {
-            val result = jdbc.query(SQL_QUERY_MANY_ENTITIES, EntityRowMapper)
+            // tag::query-multiple-entity[]
+            val result = jdbc.query(                                                    // <1>
+                    SQL_QUERY_MANY_ENTITIES,                                            // <2>
+                    EntityRowMapper                                                     // <3>
+            )
+            // end::query-multiple-entity[]
             assertThat(result).hasSize(6)
         }
     }
@@ -95,7 +106,12 @@ class QueryTest : BaseDatabase() {
     inner class QueryAttributes {
         @Test
         fun `select a single attribute`() {
-            val result = jdbc.queryForList(SQL_QUERY_ATTRIBUTE_OF_MANY_ENTITIES, String::class.java)
+            // tag::query-single-attribute[]
+            val result = jdbc.queryForList(                                             // <1>
+                    SQL_QUERY_ATTRIBUTE_OF_MANY_ENTITIES,                               // <2>
+                    String::class.java                                                  // <3>
+            )
+            // end::query-single-attribute[]
             assertThat(result).all {
                 hasSize(6)
                 isEqualTo(listOf("A","B","C","D","E","F"))
@@ -104,7 +120,11 @@ class QueryTest : BaseDatabase() {
 
         @Test
         fun `select all attributes`() {
-            val result = jdbc.queryForList(SQL_QUERY_MANY_ENTITIES)
+            // tag::query-multiple-attribute[]
+            val result = jdbc.queryForList(                                             // <1>
+                    SQL_QUERY_MANY_ENTITIES                                             // <2>
+            )
+            // end::query-multiple-attribute[]
             assertThat(result).all {
                 hasSize(6)
                 isEqualTo(listOf(
