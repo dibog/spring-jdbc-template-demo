@@ -7,5 +7,5 @@ image:https://api.travis-ci.org/dibog/spring-jdbc-template-demo.svg?branch=maste
 image:https://jitpack.io/v/dibog/spring-jdbc-template-demo.svg[link="https://jitpack.io/#dibog/spring-jdbc-template-demo"]
 image:https://img.shields.io/badge/100%25-kotlin-blue.svg[link="https://kotlinlang.org/"]
 
-Some examples and helper extension functions how to use spring jdbc.
+Some examples and helper extension for use spring jdbc.
 
