@@ -1,6 +1,6 @@
 = Readme
 Dieter Bogdoll, <dibog@github.com>
-v1.0-SNAPSHOT, 2019/08/15
+{project.version}, 2019/08/15
 :icons: font
 :toc:
 :toc2:
@@ -17,6 +17,15 @@ image:https://img.shields.io/badge/100%25-kotlin-blue.svg[link="https://kotlinla
 There are many methods within the `JdbcTemplate` class of spring.
 
 Here are some examples when to use which method.
+
+You can build this document locally with
+[source,bash]
+----
+mvn clean package -Pdocumentation
+----
+
+You can find the generated file in `target/generated-docs/readme.html`.
+
 
 == Queries
 
