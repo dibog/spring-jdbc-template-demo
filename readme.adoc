@@ -5,6 +5,7 @@ v1.0, 2019/08/15
 image:https://img.shields.io/github/license/dibog/spring-jdbc-template-demo[]
 image:https://api.travis-ci.org/dibog/spring-jdbc-template-demo.svg?branch=master[]
 image:https://jitpack.io/v/dibog/spring-jdbc-template-demo.svg[]
+image:https://img.shields.io/badge/100%25-kotlin-blue.svg[]
 
 Some examples and helper extension functions how to use spring jdbc.
 
