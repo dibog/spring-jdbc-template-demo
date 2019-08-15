@@ -87,5 +87,47 @@ method can be found in as extension method in the current project.
 
 === Inserting one entity the spring way
 
-Some examples and helper extension functions how to use spring jdbc.
+[source,kotlin]
+----
+include::src/test/java/io/dibog/spring/jdbc/InsertingEntitiesWithGeneratedIDsTest.kt[tags=inserting-single-entity-spring,indent=0]
+----
+<1> This object will contain after the query the generated key.
+<2> Again this method is required to access the jdbc connection.
+<3> Same as before we need to create the prepared statement with the correct constructor call.
+<4> Again the parameters for the prepared statement have to be set the jdbc way.
+<5> The keyholder into which the generated key will be inserted.
+<6> After the call the to the JdbcTemplate query the key can be accessed via the keyholder.
 
+
+Both methods seems to be of the same length or complexity.
+
+=== Batch insert of multiple entities the jdbc way
+
+The batch insert returning generated keys is not directly supported by the `JdbcTemplate`. In this project
+you can find an extension function which supports the `GeneratedKeyHolder` of Spring.
+----
+include::src/test/java/io/dibog/spring/jdbc/InsertingEntitiesWithGeneratedIDsTest.kt[tags=inserting-multiple-entity-plain,indent=0]
+----
+<1> To be able to create the prepare statement ourself we need to use this method of `JdbcTemplate` to get a jdbc connection.
+<2> This constructor calls creates a prepared statement which can return generated attributes of the insert.
+You can either specify `Statement.RETURN_GENERATED_KEYS` to return any generated key of the insert,
+or you can specify a StringArray containing the column names or an IntArray containing the column indices
+of the returned generated key columns.
+<3> The prepared statement parameters have to be set the usual jdbc way.
+<4> The returned `Int` should contain the modified rows within the table. In the case of a single insert it should be `1`.
+<5> The extension method `singleGeneratedKey` returns the generated key of the column `ID`. The `singleGeneratedKey`
+method can be found in as extension method in the current project.
+
+=== Batch insert of multiple entities the spring way
+----
+include::src/test/java/io/dibog/spring/jdbc/InsertingEntitiesWithGeneratedIDsTest.kt[tags=inserting-multiple-entity-spring,indent=0]
+----
+<1> To be able to create the prepare statement ourself we need to use this method of `JdbcTemplate` to get a jdbc connection.
+<2> This constructor calls creates a prepared statement which can return generated attributes of the insert.
+You can either specify `Statement.RETURN_GENERATED_KEYS` to return any generated key of the insert,
+or you can specify a StringArray containing the column names or an IntArray containing the column indices
+of the returned generated key columns.
+<3> The prepared statement parameters have to be set the usual jdbc way.
+<4> The returned `IntArray` should contain the modified rows within the table.
+<5> The extension method `generatedKeys` returns the generated key of the column `ID` as a List. The `generatedKeys`
+method can be found in as extension method in the current project.
