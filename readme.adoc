@@ -1,0 +1,6 @@
+= Readme
+Dieter Bogdoll, <dibog@github.com>
+v1.0, 2019/08/15
+
+Some examples and helper extension functions how to use spring jdbc.
+
