@@ -4,12 +4,11 @@ import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.springframework.jdbc.core.JdbcTemplate
 
-open class BaseDatabaseTest {
-
+open class BaseDatabase {
     protected val jdbc: JdbcTemplate = JdbcTemplate(
             HikariDataSource(
                     HikariConfig().apply {
-                        jdbcUrl = "jdbc:hsqldb:mem:testDb"
+                        jdbcUrl = "jdbc:hsqldb:mem:${this@BaseDatabase.javaClass.simpleName};SHUTDOWN"
                         username = "user"
                         password = "password"
                     }
@@ -23,5 +22,4 @@ open class BaseDatabaseTest {
                 NAME VARCHAR(20) NOT NULL 
             )""".trim())
     }
-
 }

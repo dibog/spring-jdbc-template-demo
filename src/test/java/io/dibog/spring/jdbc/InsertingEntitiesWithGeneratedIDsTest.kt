@@ -4,7 +4,7 @@ import assertk.assertThat
 import assertk.assertions.isInstanceOf
 import assertk.assertions.isNotNull
 import assertk.assertions.isNull
-import io.dibog.spring.jdbc.BaseDatabaseTest
+import io.dibog.spring.jdbc.BaseDatabase
 import io.dibog.spring.jdbc.batchInsert
 import io.dibog.spring.jdbc.extract
 import io.dibog.spring.jdbc.generatedKeys
@@ -25,7 +25,7 @@ private const val SQL_INSERT_ENTITY = "INSERT INTO TEST_TABLE (NAME) VALUES (?)"
 
 @DisplayName("Using Spring JdbcTemplate for inserting entities into table with generated IDs")
 @TestInstance(PER_CLASS)
-class InsertingEntitiesWithGeneratedIDsTest : BaseDatabaseTest() {
+class InsertingEntitiesWithGeneratedIDsTest : BaseDatabase() {
 
     @DisplayName("and inserting exactly one new entry")
     @Nested

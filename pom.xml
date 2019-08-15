@@ -40,7 +40,6 @@
             <version>5.1.9.RELEASE</version>
         </dependency>
 
-
         <!-- KOTLIN -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -116,7 +115,7 @@
                     <execution>
                         <phase>pre-site</phase>
                         <goals>
-                            <goal>dokka</goal>
+                            <goal>javadocJar</goal>
                         </goals>
                     </execution>
                 </executions>

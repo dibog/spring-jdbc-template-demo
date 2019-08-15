@@ -7,7 +7,7 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isFailure
 import assertk.assertions.isInstanceOf
 import assertk.assertions.isNotNull
-import io.dibog.spring.jdbc.BaseDatabaseTest
+import io.dibog.spring.jdbc.BaseDatabase
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -36,7 +36,7 @@ object EntityRowMapper : RowMapper<NameEntity> {
 
 @DisplayName("Using Spring JdbcTemplate for querying")
 @TestInstance(PER_CLASS)
-class QueryTest : BaseDatabaseTest() {
+class QueryTest : BaseDatabase() {
 
     init {
         jdbc.update("""
