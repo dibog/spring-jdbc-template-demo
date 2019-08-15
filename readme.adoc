@@ -23,7 +23,7 @@ Here are some examples when to use which method.
 === Query for exactly one entity
 [source,kotlin]
 ----
-include::src/test/java/io/dibog/spring/jdbc/QueryTest.kt[tags=query-single-entity,indent=0]
+include::{docdir}/src/test/java/io/dibog/spring/jdbc/QueryTest.kt[tags=query-single-entity,indent=0]
 ----
 <1> `JdbcTemplate::queryForObject` expects to return *one* entity. It will throw an
 `EmptyResultDataAccessException` if the query returns no entity or `IncorrectResultSizeDataAccessException`
@@ -35,7 +35,7 @@ if it throws more than one entity.
 === Query for several entities
 [source,kotlin]
 ----
-include::src/test/java/io/dibog/spring/jdbc/QueryTest.kt[tags=query-multiple-entity,indent=0]
+include::{docdir}/src/test/java/io/dibog/spring/jdbc/QueryTest.kt[tags=query-multiple-entity,indent=0]
 ----
 <1> `JdbcTemplate::query` expects to return zero to many entities.
 <2> The SQL statement for the prepared statement.
@@ -47,7 +47,7 @@ parameterize the prepared statement.
 === Query for one attribute of entities
 [source,kotlin]
 ----
-include::src/test/java/io/dibog/spring/jdbc/QueryTest.kt[tags=query-single-attribute,indent=0]
+include::{docdir}/src/test/java/io/dibog/spring/jdbc/QueryTest.kt[tags=query-single-attribute,indent=0]
 ----
 <1> `JdbcTemplate::queryForList` expects to return zero to more rows with one attribute.
 <2> The SQL statement for the prepared statement selecting just one attribute.
@@ -56,7 +56,7 @@ include::src/test/java/io/dibog/spring/jdbc/QueryTest.kt[tags=query-single-attri
 === Query for several attributes of entities
 [source,kotlin]
 ----
-include::src/test/java/io/dibog/spring/jdbc/QueryTest.kt[tags=query-multiple-attribute,indent=0]
+include::{docdir}/src/test/java/io/dibog/spring/jdbc/QueryTest.kt[tags=query-multiple-attribute,indent=0]
 ----
 <1> `JdbcTemplate::queryForList` expects to return zero to more rows with attributes.
 <2> The SQL statement for the prepared statement selecting just multiple attributes.
@@ -67,12 +67,12 @@ In the following examples will be showed which inserts new rows into a table
 where the `ID` attribute is automatically generated and returned. Returning
 of generated keys is not supported for all JDBC drivers, so use it with care.
 
-In the examples the image:http://hsqldb.org/images/hypersql_logo.png[HSQLDB,100,50,link=http://hsqldb.org] is used.
+In the examples the image:http://hsqldb.org/images/hypersql_logo.png[HSQLDB,100,30,link=http://hsqldb.org] is used.
 
 === Inserting one entity the jdbc way
 [source,kotlin]
 ----
-include::src/test/java/io/dibog/spring/jdbc/InsertingEntitiesWithGeneratedIDsTest.kt[tags=inserting-single-entity-jdbc,indent=0]
+include::{docdir}/src/test/java/io/dibog/spring/jdbc/InsertingEntitiesWithGeneratedIDsTest.kt[tags=inserting-single-entity-jdbc,indent=0]
 ----
 <1> To be able to create the prepare statement ourself we need to use this method of `JdbcTemplate` to get a jdbc connection.
 <2> This constructor calls creates a prepared statement which can return generated attributes of the insert.
@@ -89,7 +89,7 @@ method can be found in as extension method in the current project.
 
 [source,kotlin]
 ----
-include::src/test/java/io/dibog/spring/jdbc/InsertingEntitiesWithGeneratedIDsTest.kt[tags=inserting-single-entity-spring,indent=0]
+include::{docdir}/src/test/java/io/dibog/spring/jdbc/InsertingEntitiesWithGeneratedIDsTest.kt[tags=inserting-single-entity-spring,indent=0]
 ----
 <1> This object will contain after the query the generated key.
 <2> Again this method is required to access the jdbc connection.
@@ -106,7 +106,7 @@ Both methods seems to be of the same length or complexity.
 The batch insert returning generated keys is not directly supported by the `JdbcTemplate`. In this project
 you can find an extension function which supports the `GeneratedKeyHolder` of Spring.
 ----
-include::src/test/java/io/dibog/spring/jdbc/InsertingEntitiesWithGeneratedIDsTest.kt[tags=inserting-multiple-entity-plain,indent=0]
+include::{docdir}/src/test/java/io/dibog/spring/jdbc/InsertingEntitiesWithGeneratedIDsTest.kt[tags=inserting-multiple-entity-plain,indent=0]
 ----
 <1> To be able to create the prepare statement ourself we need to use this method of `JdbcTemplate` to get a jdbc connection.
 <2> This constructor calls creates a prepared statement which can return generated attributes of the insert.
@@ -120,7 +120,7 @@ method can be found in as extension method in the current project.
 
 === Batch insert of multiple entities the spring way
 ----
-include::src/test/java/io/dibog/spring/jdbc/InsertingEntitiesWithGeneratedIDsTest.kt[tags=inserting-multiple-entity-spring,indent=0]
+include::{docdir}/src/test/java/io/dibog/spring/jdbc/InsertingEntitiesWithGeneratedIDsTest.kt[tags=inserting-multiple-entity-spring,indent=0]
 ----
 <1> To be able to create the prepare statement ourself we need to use this method of `JdbcTemplate` to get a jdbc connection.
 <2> This constructor calls creates a prepared statement which can return generated attributes of the insert.
