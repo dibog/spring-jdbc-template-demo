@@ -26,3 +26,4 @@ inline fun <reified R: Any> GeneratedKeyHolder.extract(name: String): List<R?> {
 fun <R: Any> GeneratedKeyHolder.extract(name: String, resultType: KClass<R>): List<R?> {
     return keyList.map { it[name] as? R }
 }
+
