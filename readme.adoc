@@ -140,3 +140,19 @@ of the returned generated key columns.
 <4> The returned `IntArray` should contain the modified rows within the table.
 <5> The extension method `generatedKeys` returns the generated key of the column `ID` as a List. The `generatedKeys`
 method can be found in as extension method in the current project.
+
+== Misc
+
+=== Where conditions for checking membership in collections
+
+Here an example for querying for an entity:
+
+----
+include::{docdir}/src/test/java/io/dibog/spring/jdbc/MiscTest.kt[tags=query-for-entitiy-in]
+----
+
+And here the same for querying for an attribute:
+
+----
+include::{docdir}/src/test/java/io/dibog/spring/jdbc/MiscTest.kt[tags=query-for-attribute-in]
+----

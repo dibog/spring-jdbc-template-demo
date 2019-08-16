@@ -34,6 +34,8 @@ fun JdbcTemplate.batchInsert(sql: String, pss: BatchPreparedStatementSetter, key
     val result = execute<IntArray>(GeneratedKeysPreparedStatementCreator(sql), PreparedStatementCallback<IntArray> { ps ->
         try {
             val batchSize = pss.batchSize
+            if(batchSize==0) return@PreparedStatementCallback IntArray(0)
+
             val ipss = pss as? InterruptibleBatchPreparedStatementSetter
 
             if (JdbcUtils.supportsBatchUpdates(ps.connection)) {
